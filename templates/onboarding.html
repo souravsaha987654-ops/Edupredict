@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Set up · EduPredict AI{% endblock %}
+{% block content %}
+<div class="wrap"><form id="ob" class="narrow" method="post">
+ <div class="steps"><b></b><b></b><b></b></div>
+ <div class="card wiz">
+  <div class="pane c-violet"><div class="band"><div class="em">👋</div><h2>Let us get to know you</h2><p>It takes less than a minute.</p></div>
+   <div class="body"><span class="lab">I am a…</span><div class="chips">
+     <label class="chip"><input type="radio" name="role" value="Student" checked><span>🎒 Student</span></label>
+     <label class="chip"><input type="radio" name="role" value="Parent"><span>👪 Parent</span></label></div>
+    <label class="lab" for="name">Student's name</label><input type="text" id="name" name="name" placeholder="e.g. Aarav Sharma" value="{{ p.name if p else '' }}" maxlength="40">
+    <div class="row"><span></span><button type="button" class="btn" data-next data-require="#name">Continue</button></div></div></div>
+  <div class="pane c-coral"><div class="band"><div class="em">🏫</div><h2>Your studies</h2><p>So we can tailor the advice for you.</p></div>
+   <div class="body"><span class="lab">Studying in</span><div class="chips" id="lv"></div>
+    <span class="lab" id="yl">Which year?</span><div class="chips" id="yr"></div>
+    <div class="row"><button type="button" class="btn ghost" data-back>Back</button><button type="button" class="btn" data-next>Continue</button></div></div></div>
+  <div class="pane c-teal"><div class="band"><div class="em">🎯</div><h2>Your field and goal</h2><p>Pick the closest match.</p></div>
+   <div class="body"><span class="lab">Main field of study</span><div class="chips" id="st"></div>
+    <span class="lab">Target exam score</span><div class="sl"><input type="range" name="target" min="50" max="100" value="{{ p.target if p else 80 }}" data-unit="%"><output></output></div><p class="hint">Your goal. We will show how close you are to it.</p>
+    <div class="row"><button type="button" class="btn ghost" data-back>Back</button><button type="button" class="btn" data-next>Finish setup ✓</button></div></div></div>
+ </div>
+</form></div>
+{% endblock %}
+{% block scripts %}
+<script>
+const LV = {{ levels|tojson }}, P = {{ (p or {})|tojson }};
+const form = document.getElementById('ob');
+function fill() {
+  const lvl = (form.querySelector('input[name=level]:checked') || {}).value || P.level || 'College', L = LV[lvl];
+  const yk = $('input[name=year]:checked', form), sk = $('input[name=stream]:checked', form);
+  chipGroup($('#yr'), 'year', L.years, yk && L.years.includes(yk.value) ? yk.value : (L.years.includes(P.year) ? P.year : L.years[2]));
+  chipGroup($('#st'), 'stream', L.streams, sk && L.streams.includes(sk.value) ? sk.value : (L.streams.includes(P.stream) ? P.stream : L.streams[0]));
+  $('#yl').textContent = lvl === 'School' ? 'Which class?' : 'Which year?';
+}
+chipGroup($('#lv'), 'level', Object.keys(LV), P.level || 'College');
+$('#lv').addEventListener('change', fill); fill(); bindSliders(form);
+wizard(form, () => form.submit());
+</script>
+{% endblock %}

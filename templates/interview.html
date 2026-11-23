@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}AI mock interview · EduPredict AI{% endblock %}
+{% block content %}
+<div class="wrap narrow c-coral">
+ <div class="card wiz" id="setup"><div class="band"><div class="em">🎤</div><h2>AI mock interview</h2><p>Paste your syllabus topics and practise like it is the real exam.</p></div>
+  <div class="body"><span class="lab">Syllabus topics (one per line, up to 6)</span><textarea id="syl" rows="6">{{ syllabus }}</textarea>
+   <span class="lab">Difficulty</span><div class="chips">{% for d in ['Easy','Medium','Hard'] %}<label class="chip"><input type="radio" name="diff" value="{{ d }}" {{ 'checked' if d == 'Medium' }}><span>{{ d }}</span></label>{% endfor %}</div>
+   <p class="hint" style="margin-top:14px">{% if ai %}✨ Gemini AI is connected. Questions are written for your topics.{% else %}📝 No Gemini key found, so practice mode will be used. Add GEMINI_API_KEY in the .env file.{% endif %}</p>
+   <div class="row"><a class="btn ghost" href="{{ url_for('home') }}">Back</a><button class="btn" id="start">Start interview</button></div></div></div>
+ <div class="card" id="room" style="display:none">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><b id="prog"></b><span class="badge" id="src"></span></div>
+  <div class="pbar" style="margin-top:10px"><i id="pb" style="width:0"></i></div>
+  <div class="chat" id="chat"></div>
+  <div id="compose"><textarea id="ans" rows="3" placeholder="Type your answer here…"></textarea><div class="row" style="margin-top:14px"><span></span><button class="btn" id="send">Submit answer</button></div></div>
+  <div id="summary" class="sum" style="display:none"><h2>Your interview summary</h2><p>Overall score: <b id="avg"></b> · Revise first: <b id="weak"></b></p><div id="rows"></div>
+   <div class="acts"><a class="btn" href="{{ url_for('interview') }}">Try again</a><a class="btn ghost" href="{{ url_for('home') }}">Back to home</a></div></div>
+ </div>
+</div>
+{% endblock %}

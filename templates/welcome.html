@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap">
+ <section class="hero c-violet">
+  <div>
+   <h1>Know how you will do in exams, before the exams.</h1>
+   <p class="lead">Answer a few easy questions. Our AI predicts your exam score, shows what is helping and what is holding you back, and coaches you with a personal mock interview.</p>
+   <div class="pts"><span class="pt">⏱️ Takes 2 minutes</span><span class="pt">👪 Parent-friendly report</span><span class="pt">🔒 Private to you</span></div>
+  </div>
+  <div class="stage">
+   <div class="sample c-teal">
+    <div class="top">
+     <svg width="96" height="96" viewBox="0 0 200 200"><circle cx="100" cy="100" r="86" fill="none" stroke="#e5f8f5" stroke-width="22"/><circle cx="100" cy="100" r="86" fill="none" stroke="#0fb5a6" stroke-width="22" stroke-linecap="round" stroke-dasharray="540" stroke-dashoffset="125" transform="rotate(-90 100 100)"/><text x="100" y="118" text-anchor="middle" font-family="Fraunces,serif" font-weight="700" font-size="60" fill="#1d1a3b">77</text></svg>
+     <div><b style="font-family:var(--serif);font-size:20px">Sample report card</b><br><span class="mu">Predicted exam score</span></div>
+    </div>
+    <div class="mini"><i style="width:82%"></i></div><div class="mini"><i style="width:61%;background:linear-gradient(90deg,#ff6b4a,#ffa070)"></i></div><div class="mini"><i style="width:73%;background:linear-gradient(90deg,#f5a300,#ffd04d)"></i></div>
+   </div>
+   <div class="float" style="right:0;top:0">📈 +4.2 marks if you study 5 hrs more</div>
+   <div class="float" style="left:-14px;top:250px;animation-delay:-2s">🎤 AI mock interview ready</div>
+   <form class="card login c-violet" method="post" action="{{ url_for('login') }}">
+    <h3>Welcome 👋</h3>
+    <input type="email" name="email" placeholder="Email address" style="margin-bottom:10px">
+    <input type="password" name="password" placeholder="Password" style="margin-bottom:14px">
+    <button class="btn" type="submit">Sign in / Create account</button>
+    <p class="hint" style="text-align:center;margin:10px 0 0">or <button formnovalidate style="border:0;background:none;font:inherit;font-weight:700;color:var(--c1);cursor:pointer;padding:0">continue as guest</button></p>
+   </form>
+  </div>
+ </section>
+ <section class="feats">
+  <div class="feat c-coral"><div class="ic">📊</div><h3>Predict</h3><p class="mu">18 simple answers become a clear exam-score forecast.</p></div>
+  <div class="feat c-teal"><div class="ic">🧭</div><h3>Understand</h3><p class="mu">See which habits help, which hurt, and what to change first.</p></div>
+  <div class="feat c-amber"><div class="ic">🎤</div><h3>Practise</h3><p class="mu">Paste your syllabus and rehearse with an AI examiner.</p></div>
+  <div class="feat c-sky"><div class="ic">📄</div><h3>Share</h3><p class="mu">Download a neat PDF report for parents and teachers.</p></div>
+ </section>
+</div>
+{% endblock %}

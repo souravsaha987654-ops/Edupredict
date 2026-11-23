@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}How it works · EduPredict AI{% endblock %}
+{% block content %}
+<div class="wrap">
+ <h1 style="font-size:clamp(30px,4.6vw,46px)">How EduPredict AI works</h1><p class="mu">From your answers to your report, in five simple steps.</p>
+ <div class="flow">
+  {% for t,d,c in [("Sign in & profile","Class or year, field of study and goal personalise the advice.","violet"),("Guided questions","18 simple inputs about study, support, home and lifestyle.","coral"),("Data preparation","Missing values filled, text turned into numbers, values scaled.","teal"),("AI prediction","The best of several algorithms, trained on real student records, predicts the exam score.","amber"),("Report & coaching","Plain-language insights, action plan, PDF report and Gemini mock interviews.","pink")] %}
+  <div class="fs c-{{ c }}"><div class="n">{{ loop.index }}</div><b>{{ t }}</b><small>{{ d }}</small></div>{% endfor %}
+ </div>
+ <div class="card c-violet"><h3>🧠 Algorithms compared</h3>
+  {% if m %}<p class="mu">{{ m.rows }} student records, {{ m.features }} factors. Each algorithm learned from 80% of the data and was tested on the unseen 20%. Higher R² (accuracy) and lower MAE (average error in marks) are better. Winner in use: <b>{{ m.best }}</b>.</p>
+  <div style="overflow-x:auto"><table><tr><th>Algorithm</th><th>Accuracy (R²)</th><th></th><th>Avg. error</th><th>5-fold check</th></tr>
+   {% for a in m.models %}<tr class="{{ 'best' if a.best }}"><td>{{ a.name }}{% if a.best %} 🏆{% endif %}</td><td>{{ '%.1f'|format(a.r2*100) }}%</td><td style="width:30%"><div class="bar"><i style="width:{{ [a.r2*100,0]|max }}%"></i></div></td><td>±{{ '%.2f'|format(a.mae) }} marks</td><td>{{ '%.1f'|format(a.cv_r2*100) }}%</td></tr>{% endfor %}</table></div>
+  <p class="hint">Trained on {{ m.trained_on }}. Re-run <code>python ml/train.py</code> to refresh this table.</p>
+  {% else %}<p class="mu">Run <code>python ml/train.py</code> once to compare the algorithms. The result appears here. Model currently in use: <b>{{ model_name }}</b>.</p>{% endif %}
+ </div>
+ <div class="cols"><div class="card c-teal"><h3>🔒 Privacy</h3><p class="mu">Answers are used only to create your report. Nothing is sold or shared.</p></div>
+  <div class="card c-amber"><h3>⚖️ Fairness</h3><p class="mu">Gender is never used to predict a score. Every prediction treats it as one fixed neutral value.</p></div></div>
+ <div class="acts"><a class="btn" href="{{ url_for('home') }}">Back to home</a></div>
+</div>
+{% endblock %}

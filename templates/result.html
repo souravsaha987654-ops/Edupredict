@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Your report · EduPredict AI{% endblock %}
+{% block content %}
+<div class="wrap c-{{ r.status.color }}">
+ <div class="card rhead">
+  <div class="ring"><svg width="210" height="210" viewBox="0 0 210 210"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--c1)"/><stop offset="1" style="stop-color:var(--c2)"/></linearGradient></defs>
+    <circle class="bg" cx="105" cy="105" r="90" fill="none" stroke-width="22"/><circle class="fg" cx="105" cy="105" r="90" fill="none" stroke-width="22" data-score="{{ r.score }}"/></svg>
+   <div class="num"><span class="n">0</span><small>out of 100</small></div></div>
+  <div><span class="tag">{{ r.status.label }}</span>
+   <h2 style="margin-top:12px">{{ profile.name.split()[0] }}'s predicted exam score</h2>
+   <p class="mu">{{ r.status.sub }}. {% if r.gap > 0 %}Your goal is <b>{{ r.target }}%</b>, which is <b>{{ r.gap }} marks</b> away.{% else %}You have reached your {{ r.target }}% goal. 🎉{% endif %}</p>
+   <div class="goal"><i style="width:{{ r.score }}%"></i><u style="left:calc({{ r.target }}% - 2px)"></u></div><small class="mu">Black marker = your goal ({{ r.target }}%)</small></div>
+ </div>
+ <div class="cols">
+  <div class="card c-green"><h3>✅ What is working</h3>
+   {% for s in r.strengths %}<div class="li"><div class="e">{{ s.emoji }}</div><div><b>{{ s.label }}</b><small>You: {{ s.you }} · typical: {{ s.typical }}</small></div><span class="pm">+{{ s.impact }}</span></div>
+   {% else %}<p class="mu">Everything is close to average.</p>{% endfor %}</div>
+  <div class="card c-coral"><h3>👀 Needs attention</h3>
+   {% for s in r.concerns %}<div class="li"><div class="e">{{ s.emoji }}</div><div><b>{{ s.label }}</b><small>You: {{ s.you }} · typical: {{ s.typical }}</small></div><span class="pm">{{ s.impact }}</span></div>
+   {% else %}<p class="mu">Nothing is pulling the score down. Great!</p>{% endfor %}</div>
+ </div>
+ <div class="card c-sky" style="margin-top:20px"><h3>🚀 Your action plan</h3>
+  {% for p in r.plan %}<div class="li"><div class="e">{{ p.emoji }}</div><b>{{ p.text }}</b><span class="pm">+{{ p.gain }} marks</span></div>
+  {% else %}<p class="mu">Keep up your current routine. You are doing everything right!</p>{% endfor %}</div>
+ <div class="parent"><div class="e">👪</div><div><b style="font-family:var(--serif);font-size:20px">For parents</b><p>{{ r.parent_summary }}</p></div></div>
+ <div class="acts"><a class="btn" href="{{ url_for('report_pdf') }}">📄 Download PDF report</a><a class="btn ghost" href="{{ url_for('interview') }}">🎤 Practise with AI interview</a><a class="btn ghost" href="{{ url_for('check') }}">↻ Check again</a></div>
+ <p class="hint" style="margin-top:18px">This is an AI estimate based on patterns in 6,606 student records. It is a guide for improvement, not a guarantee.</p>
+</div>
+{% endblock %}

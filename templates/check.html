@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Check my performance · EduPredict AI{% endblock %}
+{% block content %}
+<div class="wrap"><form id="ck" class="narrow" method="post">
+ <div class="steps">{% for s in steps %}<b></b>{% endfor %}</div>
+ <div class="card wiz">
+ {% for s in steps %}
+  <div class="pane c-{{ s.color }}">
+   <div class="band"><div class="em">{{ s.emoji }}</div><span style="opacity:.9;font-weight:600;font-size:14px;position:relative">Step {{ loop.index }} of {{ steps|length }}</span><h2>{{ s.title }}</h2><p>{{ s.sub }}</p></div>
+   <div class="body">
+   {% for q in s.q %}{% set val = (last or {}).get(q.k, q.default) %}
+    <span class="lab">{{ q.label }}</span>
+    {% if q.t == 'slider' %}
+     <div class="sl"><input type="range" name="{{ q.k }}" min="{{ q.min }}" max="{{ q.max }}" value="{{ val }}" data-unit="{{ q.unit }}"><output></output></div>
+     {% if q.hint %}<div class="hint">{{ q.hint }}</div>{% endif %}
+    {% else %}
+     <div class="chips">{% for o in q.options %}<label class="chip"><input type="radio" name="{{ q.k }}" value="{{ o }}" {{ 'checked' if o == val }}><span>{{ o }}</span></label>{% endfor %}</div>
+    {% endif %}
+   {% endfor %}
+   <div class="row"><button type="button" class="btn ghost" data-back>Back</button>
+    <button type="button" class="btn" data-next>{{ 'Predict my score ✨' if loop.last else 'Next' }}</button></div>
+   </div>
+  </div>
+ {% endfor %}
+ </div>
+</form></div>
+<div class="overlay" id="ov"><div><div class="spin"></div><h2>Analysing your profile…</h2><p class="mu" id="msg">Cleaning your answers</p></div></div>
+{% endblock %}
+{% block scripts %}
+<script>
+bindSliders(); const form = document.getElementById('ck');
+wizard(form, () => {
+  $('#ov').classList.add('on'); const m = ['Preparing your data…', 'Running the prediction model…', 'Writing your report…']; let i = 0;
+  const t = setInterval(() => $('#msg').textContent = m[i++ % 3], 700); setTimeout(() => form.submit(), 2200);
+});
+</script>
+{% endblock %}

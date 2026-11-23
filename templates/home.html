@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Home · EduPredict AI{% endblock %}
+{% block content %}
+<div class="wrap">
+ <div class="hello"><h1 style="font-size:clamp(30px,4.6vw,46px)">Hello, {{ profile.name.split()[0] }} 👋</h1>
+  <p class="mu">{{ profile.year }}{% if profile.level == 'College' %} · {{ profile.stream }}{% endif %}{% if profile.role == 'Parent' %} · Parent view{% endif %} · Goal {{ profile.target }}%</p></div>
+ {% if result %}
+ <div class="card last c-{{ result.status.color }}"><div class="n">{{ result.score }}%</div>
+  <div style="flex:1;min-width:200px"><b style="font-family:var(--serif);font-size:20px">Your latest prediction · {{ result.status.label }}</b>
+   <div class="mu">{% if result.gap > 0 %}{{ result.gap }} marks away from your {{ result.target }}% goal.{% else %}You are on track to reach your goal. 🎉{% endif %}</div></div>
+  <a class="btn sm" href="{{ url_for('result') }}">View report</a></div>
+ {% endif %}
+ <div class="tiles">
+  <a class="tile c-violet" href="{{ url_for('check') }}"><div class="ban"><span>📊</span></div><div class="tx"><h3>Check my performance</h3><p class="mu">Four short steps and you get your predicted exam score.</p><span class="go">Start now →</span></div></a>
+  <a class="tile c-coral" href="{{ url_for('interview') }}"><div class="ban"><span>🎤</span></div><div class="tx"><h3>Practise with AI interview</h3><p class="mu">Share your syllabus and rehearse with an AI examiner.</p><span class="go">Practise →</span></div></a>
+  <a class="tile c-teal" href="{{ url_for('how') }}"><div class="ban"><span>💡</span></div><div class="tx"><h3>How it works</h3><p class="mu">See how the AI reaches its prediction. Great for parents.</p><span class="go">Learn more →</span></div></a>
+ </div>
+ <div class="stats"><div class="stat c-amber"><b>6,606</b>students learned from</div><div class="stat c-pink"><b>18</b>factors analysed</div><div class="stat c-sky"><b>6</b>algorithms compared</div><div class="stat c-green"><b>2 min</b>to your report</div></div>
+</div>
+{% endblock %}

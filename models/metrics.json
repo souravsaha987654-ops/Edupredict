@@ -1,0 +1,56 @@
+{
+  "models": [
+    {
+      "name": "Linear Regression",
+      "r2": 0.825,
+      "mae": 0.416,
+      "rmse": 1.521,
+      "cv_r2": 0.7306,
+      "best": true
+    },
+    {
+      "name": "Ridge Regression",
+      "r2": 0.825,
+      "mae": 0.416,
+      "rmse": 1.521,
+      "cv_r2": 0.7306,
+      "best": false
+    },
+    {
+      "name": "XGBoost",
+      "r2": 0.7916,
+      "mae": 0.659,
+      "rmse": 1.66,
+      "cv_r2": 0.7046,
+      "best": false
+    },
+    {
+      "name": "Gradient Boosting",
+      "r2": 0.7832,
+      "mae": 0.742,
+      "rmse": 1.693,
+      "cv_r2": 0.6932,
+      "best": false
+    },
+    {
+      "name": "Random Forest",
+      "r2": 0.7087,
+      "mae": 1.052,
+      "rmse": 1.963,
+      "cv_r2": 0.6437,
+      "best": false
+    },
+    {
+      "name": "Decision Tree",
+      "r2": 0.4722,
+      "mae": 1.596,
+      "rmse": 2.642,
+      "cv_r2": 0.4933,
+      "best": false
+    }
+  ],
+  "best": "Linear Regression",
+  "rows": 6606,
+  "features": 18,
+  "trained_on": "2026-11-17"
+}
